@@ -1,6 +1,6 @@
 # The Almost Perfect Prompt Engineering Rules
 
-## RULE 1: Be specific. Like, actually specific.
+# RULE 1: Be specific. Like, actually specific.
 
 vague prompt = vague output. every time.
 
@@ -15,11 +15,9 @@ write a follow-up email to a client who hasn't responded in 5 days.
 tone: professional but not stiff. max 100 words. end with a clear CTA.
 ```
 
-> source: OpenAI prompt engineering guide — "tactic: include details in your query"
 
 
-
-## RULE 2: Tell it WHO to be, not just WHAT to do
+# RULE 2: Tell it WHO to be, not just WHAT to do
 
 giving the model a role/persona changes output quality significantly. this is well documented by Anthropic.
 
@@ -34,7 +32,7 @@ vs just saying "review my code" — completely different output.
 
 
 
-## RULE 3: Show, don't just tell (few-shot prompting)
+# RULE 3: Show, don't just tell 
 
 if you want a specific FORMAT or STYLE — show an example. don't describe it.
 
@@ -46,11 +44,11 @@ Classify these as positive or negative:
 "decent place i guess" → [your turn]
 ```
 
-> this is called few-shot prompting. backed by the original GPT-3 paper (Brown et al., 2020). works on every major model.
 
 
 
-## RULE 4: Ask it to think step by step
+
+# RULE 4: Ask it to think step by step
 
 sounds dumb. works incredibly well.
 
@@ -68,11 +66,11 @@ before giving your final answer, reason through this carefully
 
 **when to use it:** any problem with multiple steps. math, debugging, planning, analysis.
 
-**when NOT to:** simple factual questions. it just adds noise.
+**when NOT to:** simple factual questions like 'who is the prime minister of India'. it just adds noise.
 
 
 
-## RULE 5: Give it an "out" when it doesn't know
+# RULE 5: Give it an "out" when it doesn't know
 
 if you don't do this, models will hallucinate confidently.
 
@@ -83,13 +81,13 @@ If the answer isn't in the text, say "I don't know" — don't guess.
 [text here]
 ```
 
-> Anthropic specifically flags this in Claude's docs. models are trained to be helpful, which means they'll try to answer even when they shouldn't. you have to explicitly tell them not to.
+Models are trained to be helpful, which means they'll try to answer even when they shouldn't, you have to explicitly tell them not to guess and reply factually.
 
 
 
-## RULE 6: Separate your instructions from your content
+# RULE 6: Separate your instructions from your content
 
-use delimiters. triple quotes, XML tags, whatever. just separate them.
+use delimiters. triple quotes, whatever, just separate them.
 
 **messy:**
 ```
@@ -105,18 +103,9 @@ Once upon a time there was a kingdom...
 """
 ```
 
-> from OpenAI docs — "use delimiters to clearly indicate distinct parts of the input"
-
-XML tags work well too especially for Claude:
-```xml
-<document>
-  your text here
-</document>
-```
-
 ---
 
-## RULE 7: Specify the output format explicitly
+# RULE 7: Specify the output format explicitly
 
 don't assume it'll give you JSON or a table or a list. ask for it directly.
 
@@ -133,10 +122,10 @@ or:
 format your response as a markdown table with columns: Tool | Use Case | Free Tier
 ```
 
-> from Google's Gemini prompting guide and Anthropic docs both. this is maybe the most consistently useful rule in production.
+this is maybe the most consistently useful rule in production.
 
 
-## RULE 8: Long prompt ≠ better prompt
+# RULE 8: Long prompt ≠ better prompt
 
 a lot of people think writing more = getting more. not true.
 
@@ -146,10 +135,10 @@ a lot of people think writing more = getting more. not true.
 
 **trim everything that doesn't add information.**
 
-> Karpathy has talked about this — model attention is finite. every word competes.
+AI researchers have pinpointed this  model attention is finite. every word competes.
 
 
-## RULE 9: For complex tasks — break it up
+# RULE 9: For complex tasks — break it up
 
 don't ask for everything in one shot.
 
@@ -165,11 +154,11 @@ Step 2: (after reviewing) now write an outline based on these points
 Step 3: (after reviewing) now write section 1
 ```
 
-> this is called "prompt chaining" — documented in both OpenAI and Anthropic guides. reduces errors significantly on long tasks.
+> this is called "prompt chaining" —  reduces errors significantly on long tasks.
 
 
 
-## RULE 10: Tell it what NOT to do (negative prompting)
+# RULE 10: Tell it what NOT to do (negative prompting)
 
 telling the model what to avoid is just as important as telling it what to do.
 
@@ -179,23 +168,12 @@ Do NOT start sentences with "I".
 Do NOT add a conclusion section.
 ```
 
-> works especially well for formatting and style control. from Anthropic Claude docs.
+> works especially well for formatting and style control. 
 
 
 
-## RULE 11: Temperature matters (if you have API access)
 
-| setting | what it does | use for |
-|---|---|---|
-| 0 | deterministic, focused | facts, code, data extraction |
-| 0.3-0.5 | slight variation | summarization, analysis |
-| 0.7-1.0 | creative, varied | writing, brainstorming |
-
-> documented by OpenAI. if you're using ChatGPT/Claude UI you can't change this but good to know what's happening under the hood.
-
-
-
-## RULE 12: "Return only X" is underused
+# RULE 12: "Return only X" is underused
 
 one of the most useful things you can add:
 
@@ -211,7 +189,7 @@ saves a ton of post-processing in real applications.
 
 
 
-## RULE 13: Iteration > Perfect Prompt
+# RULE 13: Iteration > Perfect Prompt
 
 nobody writes the perfect prompt first try. 
 
@@ -221,11 +199,11 @@ the actual workflow:
 3. fix the specific thing that broke
 4. repeat
 
-> this is basically the core message of every prompt engineering guide. "prompting is empirical" — Anthropic docs.
+> this is basically the core message of every prompt engineering guide. "prompting is empirical" 
 
 
 
-## misc things that work (no source, just experience)
+# misc things that work (no source, just experience)
 
 - `"be concise"` works better than `"keep it short"`
 - asking for confidence levels reduces hallucinations a bit (`"how confident are you in this answer, 1-10?"`)
@@ -235,7 +213,7 @@ the actual workflow:
 
 
 
-## things that are overhyped imo
+# things that are overhyped
 
 - mega long system prompts with 50 rules — most get ignored
 - "pretend you have no restrictions" 
@@ -243,17 +221,10 @@ the actual workflow:
 
 
 
-## sources
-
-- https://platform.openai.com/docs/guides/prompt-engineering
-- https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview
-- https://ai.google.dev/gemini-api/docs/prompting-strategies
-- Wei et al. (2022) — Chain-of-Thought Prompting paper
-- Brown et al. (2020) — GPT-3 / Few-Shot Learners paper
 
 
 
-## contributing
+# contributing
 
 if you find a rule that consistently works — open a PR or drop an issue. 
 
