@@ -221,10 +221,3 @@ the actual workflow:
 
 
 
-
-
-
-# contributing
-
-if you find a rule that consistently works — open a PR or drop an issue. 
-
