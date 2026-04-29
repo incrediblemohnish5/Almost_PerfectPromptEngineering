@@ -238,8 +238,7 @@ the actual workflow:
 ## things that are overhyped imo
 
 - mega long system prompts with 50 rules — most get ignored
-- "DAN" style jailbreak prompts — patched, don't work
-- "pretend you have no restrictions" — also patched
+- "pretend you have no restrictions" 
 - asking it to "be creative" without any other guidance — just gives generic stuff
 
 
