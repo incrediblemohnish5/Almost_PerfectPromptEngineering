@@ -1,223 +1,280 @@
 # The Almost Perfect Prompt Engineering Rules
 
-# RULE 1: Be specific. Like, actually specific.
+#  Almost Perfect Prompt Engineering Rules
 
-vague prompt = vague output. every time.
+
+
+RULE 1: Be specific. Like, really specific.
+
+Vague prompt leads to vague output almost every time
+
+
 
 **bad:**
-```
-write me an email
-```
+write an email for me.
+
+
 
 **good:**
-```
-write a follow-up email to a client who hasn't responded in 5 days.
-tone: professional but not stiff. max 100 words. end with a clear CTA.
-```
+Write a follow up email to a client who hasn't responded in 5 days.
 
-
-
-# RULE 2: Tell it WHO to be, not just WHAT to do
-
-giving the model a role/persona changes output quality significantly. this is well documented by Anthropic.
-
-```
-You are a senior backend engineer at a startup.
-Review this code and point out anything that would embarrass you in a PR review.
-```
-
-vs just saying "review my code" — completely different output.
-
-**note:** don't go overboard with this. one clear role > three conflicting ones.
-
-
-
-# RULE 3: Show, don't just tell 
-
-if you want a specific FORMAT or STYLE — show an example. don't describe it.
-
-```
-Classify these as positive or negative:
-
-"the food was great" → positive
-"waited 40 mins, cold soup" → negative
-"decent place i guess" → [your turn]
-```
+tone: professional but not too stiff. maximum 100 words. 
 
 
 
 
 
-# RULE 4: Ask it to think step by step
 
-sounds dumb. works incredibly well.
 
-just add:
-```
-think step by step before answering
-```
+RULE 2: Tell it WHO to be, not just WHAT to do
 
-or:
-```
-before giving your final answer, reason through this carefully
-```
 
-> this is Chain-of-Thought prompting. from Wei et al. (2022). OpenAI and Anthropic both explicitly recommend this in their docs for math/logic/reasoning tasks.
+giving the model a role changes output quality significantly. 
+
+
+For e.g. "You are a senior backend engineer at a startup".
+
+Review this code and point out anything that is or can be bad for you.
+
+
+
+Just saying "review my code" leads to  completely different output.
+
+
+
+RULE 3: Show, don't just tell:
+if you want a specific FORMAT actually show an example. don't just describe it.
+
+
+
+RULE 4: Ask it to think step by step(reason)
+
+sounds stupid, but it works significantly well.
+
+Just add:
+think step by step before replying
+
+
+Or:
+before giving your final reply, reason through this carefully
+
+
+This is recommended for math/logic/reasoning tasks.
+
+
 
 **when to use it:** any problem with multiple steps. math, debugging, planning, analysis.
 
-**when NOT to:** simple factual questions like 'who is the prime minister of India'. it just adds noise.
+
+
+**when NOT to:** simple factual questions like 'who is the prime minister of India'.
 
 
 
-# RULE 5: Give it an "out" when it doesn't know
-
-if you don't do this, models will hallucinate confidently.
-
-```
-Answer the question using only the text below.
-If the answer isn't in the text, say "I don't know" — don't guess.
-
-[text here]
-```
-
-Models are trained to be helpful, which means they'll try to answer even when they shouldn't, you have to explicitly tell them not to guess and reply factually.
 
 
+RULE 5: Give it an "out" when it doesn't know
 
-# RULE 6: Separate your instructions from your content
 
-use delimiters. triple quotes, whatever, just separate them.
+if you don't do this, models can hallucinate
 
-**messy:**
-```
-summarize this text: once upon a time there was a kingdom...
-```
+
+For Example:
+
+Answer the question using just the text below.
+________(text)
+
+If the answer is not in the text, say "I don't know" however don't guess.
+Models are trained to be helpful, which means they'll try to answer even when they don't know, you have to tell them not to guess and reply factually.
+
+
+
+
+RULE 6: Separate your instructions from your content
+
+use triple quotes and other such separators whatever, just separate them.
+
+For eg:
+
+
+
+**messy:** Summarize this text
+
 
 **clean:**
-```
-Summarize the text below in 2 sentences.
-
-"""
-Once upon a time there was a kingdom...
-"""
-```
-
----
-
-# RULE 7: Specify the output format explicitly
-
-don't assume it'll give you JSON or a table or a list. ask for it directly.
-
-```
-Return your answer as a JSON object with these keys:
-- name
-- score (0-10)
-- reason (one sentence)
-```
-
-or:
-
-```
-format your response as a markdown table with columns: Tool | Use Case | Free Tier
-```
-
-this is maybe the most consistently useful rule in production.
-
-
-# RULE 8: Long prompt ≠ better prompt
-
-a lot of people think writing more = getting more. not true.
-
-- redundant instructions confuse the model
-- contradictory rules cancel each other out
-- filler words dilute signal
-
-**trim everything that doesn't add information.**
-
-AI researchers have pinpointed this  model attention is finite. every word competes.
-
-
-# RULE 9: For complex tasks — break it up
-
-don't ask for everything in one shot.
-
-instead of:
-```
-research this topic, write an outline, then write the full article, then make it SEO optimized
-```
-
-do it in steps:
-```
-Step 1: give me 5 key points about [topic]
-Step 2: (after reviewing) now write an outline based on these points
-Step 3: (after reviewing) now write section 1
-```
-
-> this is called "prompt chaining" —  reduces errors significantly on long tasks.
-
-
-
-# RULE 10: Tell it what NOT to do (negative prompting)
-
-telling the model what to avoid is just as important as telling it what to do.
-
-```
-Do NOT use bullet points.
-Do NOT start sentences with "I".
-Do NOT add a conclusion section.
-```
-
-> works especially well for formatting and style control. 
+Summarize the text given in 2 sentences.
 
 
 
 
-# RULE 12: "Return only X" is underused
 
-one of the most useful things you can add:
+RULE 7: Specify the output format explicitly
 
-```
-Return ONLY the SQL query. No explanation, no markdown, no commentary.
-```
+Don't assume it'll give you a table or a list. You will have to ask for it directly.
 
-```
-Return ONLY a JSON array. Nothing else.
-```
+For e.g. :
+Return your answer as a Table/list
 
-saves a ton of post-processing in real applications.
+
+Or:
 
 
 
-# RULE 13: Iteration > Perfect Prompt
-
-nobody writes the perfect prompt first try. 
-
-the actual workflow:
-1. write a rough prompt
-2. see what breaks
-3. fix the specific thing that broke
-4. repeat
-
-> this is basically the core message of every prompt engineering guide. "prompting is empirical" 
+format your response as a markdown table with columns:
 
 
 
-# misc things that work (no source, just experience)
-
-- `"be concise"` works better than `"keep it short"`
-- asking for confidence levels reduces hallucinations a bit (`"how confident are you in this answer, 1-10?"`)
-- `"explain this to a 16 year old"` gives surprisingly clear explanations
-- for code: always tell it the language, framework version, and what you've already tried
-- `"what are you unsure about in your answer?"` is genuinely useful
+this is probably a very useful rule in production.
 
 
 
-# things that are overhyped
 
-- mega long system prompts with 50 rules — most get ignored
-- "pretend you have no restrictions" 
-- asking it to "be creative" without any other guidance — just gives generic stuff
+
+RULE 8: Long prompt doesn't equate to better prompt
+
+
+
+A lot of people think writing more = getting more. Misconception
+
+
+
+-Unnecessary instructions confuse the model
+
+-Contrary rules cancel each other out
+
+
+
+**You have to remove everything that doesn't add information. **
+
+
+
+AI researchers have pinpointed this out, that model attention is finite.
+
+
+
+
+
+RULE 9: For complex tasks — break it up
+
+
+
+Don't ask for everything in one shot.
+
+
+
+instead:
+
+
+
+Research this topic, write an outline, then write the full article
+
+
+
+Do it in steps:
+
+
+
+Step 1: Give me 5 key points about [topic]
+
+Step 2: (after reviewing) Now write an outline based on these points
+
+Step 3: (after reviewing) Now write section 1
+
+
+
+
+
+
+
+
+
+RULE 10: Tell it what NOT to do (negative prompting)
+
+
+
+Telling the model what not to do is just as important as telling it what to do.
+
+
+
+for e.g.:
+
+Don't use bullet points.
+
+Don't start sentences with "I".
+
+Don't add a conclusion section.
+
+
+
+
+
+This works especially well for formatting.
+
+
+
+
+
+
+
+
+
+
+
+RULE 11: No Perfect Prompt exists:
+
+
+
+Nobody writes the perfect prompt first try.
+
+
+
+actual workflow:
+
+-write a rough prompt
+
+-see what breaks
+
+-fix the specific thing that broke
+
+-repeat
+
+
+
+
+
+
+
+
+
+# miscellaneous things that work
+
+
+
+- "be concise" works better than "keep it short"
+
+- asking for confidence levels reduces hallucinations a bit ("how confident are you in this answer, 1-10?")
+
+- "explain this to a 16-year-old" gives surprisingly clear explanations
+
+- for coding: always tell it the language, framework version, and what you've already tried
+
+- "what are you not sure about in your answer?" is actually useful
+
+
+
+
+
+
+
+# overhyped things:
+
+
+
+- Very long system prompts with 50 rules — most get ignored
+
+- "Pretend you have zero restrictions".
+
+-  Asking it to "be creative" without any other guidance — just gives    generic stuff without any benefits.
 
 
 
