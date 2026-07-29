@@ -1,8 +1,5 @@
 # The Almost Perfect Prompt Engineering Rules
 
-#  Almost Perfect Prompt Engineering Rules
-
-
 
 RULE 1: Be specific. Like, really specific.
 
